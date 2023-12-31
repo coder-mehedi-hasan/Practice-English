@@ -1,16 +1,13 @@
-import { useState } from 'react';
 import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder'
 
 function App() {
 
-  const recorderControls = useAudioRecorder()
-  const [src, setSrc] = useState(null)
+  const recorderControls = useAudioRecorder();
 
   const addAudioElement = (blob: any) => {
     const url = URL.createObjectURL(blob);
     const audio = document.createElement("audio");
     audio.src = url;
-    // setSrc(src)
     audio.controls = true;
     document.getElementById('body')?.appendChild(audio)
 
