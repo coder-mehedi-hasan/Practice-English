@@ -1,15 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder'
 
 function App() {
 
   const recorderControls = useAudioRecorder()
-  const [count, setCount] = useState(0)
 
-  const addAudioElement = (blob) => {
+  const addAudioElement = (blob:any) => {
     const url = URL.createObjectURL(blob);
     const audio = document.createElement("audio");
     audio.src = url;
