@@ -2,32 +2,36 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder'
 
 function App() {
+
+  const recorderControls = useAudioRecorder()
   const [count, setCount] = useState(0)
+
+  const addAudioElement = (blob) => {
+    const url = URL.createObjectURL(blob);
+    const audio = document.createElement("audio");
+    audio.src = url;
+    audio.controls = true;
+    document.body.appendChild(audio);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className='recorder-timer p-1 rounded-pill d-flex align-items-center'>
+        <div>
+          <AudioRecorder
+            onRecordingComplete={(blob) => addAudioElement(blob)}
+            recorderControls={recorderControls}
+            audioTrackConstraints={{
+              noiseSuppression: true,
+              echoCancellation: true,
+            }}
+          />
+        </div>
+        <button onClick={recorderControls.stopRecording}>Stop recording</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
